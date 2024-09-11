@@ -1,6 +1,7 @@
 <script>
 import SearchSection from "./SearchSection.vue";
 import CatchedSection from "./CatchedSection.vue"
+import axios from "axios";
 
 export default {
     components: {
@@ -11,6 +12,7 @@ export default {
         return {
             myPokemons: [],
             isCatched: false,
+            hoveredPokemon: {}
         }
     },
     methods: {
@@ -25,6 +27,12 @@ export default {
                 this.myPokemons.push(pokemonName)
             }
         },
+        showHoveredPokemon(pokemonHovered){
+            axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonHovered}`).then((resp)=> {
+                    this.hoveredPokemon = resp.data;
+                    console.log(this.hoveredPokemon);
+            })
+        }
         
     }
 
@@ -44,10 +52,10 @@ export default {
     <!-- sections -->
     <div id="pokedex-container" class="d-flex">
         <div class="ms-cont ms-cont-1">
-            <SearchSection @pokemonName="catchPokemons"/>
+            <SearchSection @pokemonName="catchPokemons" :hoveredPokemon="hoveredPokemon"/>
         </div>
         <div class="ms-cont ms-cont-2">
-            <CatchedSection :pokemonList="myPokemons"/>
+            <CatchedSection :pokemonList="myPokemons" @pokemonHovered="showHoveredPokemon"/>
         </div>
     </div>
 
