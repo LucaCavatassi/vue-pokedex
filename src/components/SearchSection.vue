@@ -19,6 +19,7 @@
         mounted(){
             console.log(this.switchButton);        
         },
+        
         methods: {
             fetchData() {
                 this.switchButton = false
