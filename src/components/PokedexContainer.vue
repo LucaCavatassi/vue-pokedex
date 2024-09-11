@@ -1,11 +1,18 @@
 <script>
+import SearchSection from "./SearchSection.vue"
+
+export default {
+    components: {
+        SearchSection,
+    }
+}
 
 </script>
 
 <template>
     <div id="pokedex-container" class="d-flex">
         <div class="ms-cont ms-cont-1">
-
+            <SearchSection/>
         </div>
         <div class="ms-cont ms-cont-2">
 
