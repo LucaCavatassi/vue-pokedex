@@ -15,6 +15,13 @@ export default {
             hoveredPokemon: {}
         }
     },
+    mounted() {
+        // Retrieve caught Pokemon from localStorage when component is mounted
+        const savedPokemons = localStorage.getItem('myPokemons');
+        if (savedPokemons) {
+            this.myPokemons = JSON.parse(savedPokemons);
+        }
+    },
     methods: {
         catchPokemons(pokemonName) {
             if (this.myPokemons.includes(pokemonName)){
@@ -25,13 +32,18 @@ export default {
                 }, 4000)
             } else {
                 this.myPokemons.push(pokemonName)
+                localStorage.setItem('myPokemons', JSON.stringify(this.myPokemons));
             }
         },
         showHoveredPokemon(pokemonHovered){
-            axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonHovered}`).then((resp)=> {
-                    this.hoveredPokemon = resp.data;
-                    console.log(this.hoveredPokemon);
-            })
+            if (pokemonHovered) {
+                axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonHovered}`).then((resp)=> {
+                        this.hoveredPokemon = resp.data;
+                        console.log(this.hoveredPokemon);
+                })
+            } else {
+                this.hoveredPokemon = null
+            }
         }
         
     }

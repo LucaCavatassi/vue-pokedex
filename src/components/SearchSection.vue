@@ -20,8 +20,11 @@
         },
         methods: {
             fetchData() {
+                this.hoveredResult = {};
                 axios.get(`https://pokeapi.co/api/v2/pokemon/${this.searchQuery}`).then((resp)=> {
                     this.result = resp.data;
+                    console.log(this.hoveredResult);
+                    
                 })
             },
             catchPokemon() {
@@ -41,16 +44,16 @@
     <button id="catch-button"  class="fs-5" @click="catchPokemon">Catch</button>
     </div>
 
-    <div class="results-container d-flex flex-column justify-content-center align-items-center" v-if="hoveredPokemon.name">
+    <div class="results-container d-flex flex-column justify-content-center align-items-center" v-if="hoveredPokemon && hoveredPokemon.name">
         <div class="img-cont">
             <img class="img-fluid" :src="hoveredPokemon.sprites.front_default" alt="">
         </div>
         <ul>
-            <img :src="hoveredPokemon.sprites.front_default" alt="">
-            <li>{{ hoveredPokemon.name }}</li>
-            <li>{{ hoveredPokemon.types[0].type.name }}</li>
-            <li>{{ hoveredPokemon.height }}</li>
-            <li>{{ hoveredPokemon.weight }}</li>
+            <li>name - {{ hoveredPokemon.name }}</li>
+            <li>type -  {{ hoveredPokemon.types[0].type.name }}</li>
+            <li>height - {{ hoveredPokemon.height }}</li>
+            <li>weight - {{ hoveredPokemon.weight }}</li>
+            <hr>
             <li v-for="stats in hoveredPokemon.stats">{{ stats.stat.name }} - {{ stats.base_stat }}</li>
         </ul>
     </div>
@@ -64,12 +67,12 @@
             <li>type -  {{ result.types[0].type.name }}</li>
             <li>height - {{ result.height }}</li>
             <li>weight - {{ result.weight }}</li>
-            <hr class="m-0">
+            <hr>
             <li v-for="stats in result.stats">{{ stats.stat.name }} - {{ stats.base_stat }}</li>
         </ul>
     </div>
 
-    <div class="results-container d-flex flex-column justify-content-center align-items-center" v-else-if="!result.name">
+    <div class="results-container d-flex flex-column justify-content-center align-items-center" v-else>
         <div class="img-cont">
             <img class="img-fluid" src="/public/pokeball.png" alt="">
         </div>
