@@ -9,17 +9,23 @@ export default {
     },
     data() {
         return {
-            myPokemons: []
+            myPokemons: [],
+            isCatched: false,
         }
     },
     methods: {
         catchPokemons(pokemonName) {
             if (this.myPokemons.includes(pokemonName)){
-                console.log("Pokemon already there!");
+                this.isCatched = true
+
+                setTimeout(()=> {
+                    this.isCatched = false;
+                }, 4000)
             } else {
                 this.myPokemons.push(pokemonName)
             }
-        }
+        },
+        
     }
 
 }
@@ -27,6 +33,15 @@ export default {
 </script>
 
 <template>
+    <!-- Alert pokemon already catched -->
+    <div v-if="this.isCatched" class="alert alert-warning d-flex justify-content-center align-items-center mb-0 p-0">
+        <div>
+            <p class="fs-2 mb-0">You already got this pokemon!</p>
+            <p class="fs-6 mb-0 text-center">Try catching another one.</p>
+        </div>
+    </div>
+
+    <!-- sections -->
     <div id="pokedex-container" class="d-flex">
         <div class="ms-cont ms-cont-1">
             <SearchSection @pokemonName="catchPokemons"/>
