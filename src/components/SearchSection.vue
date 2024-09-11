@@ -105,14 +105,14 @@
         }
         ul{
             list-style: none;
-            border: 1px solid black;
-            border-radius: 5px;
             padding: 10px;
             font-size: 0.9rem;
             margin: 10px 0;
             height: 100%;
             width: 100%;
             background-color: green;
+            border:  8px solid greenyellow;
+            border-radius: 5px;
             color: greenyellow;
             li{
                 text-transform: capitalize;

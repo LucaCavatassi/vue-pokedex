@@ -66,7 +66,7 @@ export default {
         <div class="ms-cont ms-cont-1">
             <SearchSection @pokemonName="catchPokemons" :hoveredPokemon="hoveredPokemon"/>
         </div>
-        <div class="ms-cont ms-cont-2">
+        <div class="ms-cont ms-cont-2 d-flex align-items-center justify-content-center">
             <CatchedSection :pokemonList="myPokemons" @pokemonHovered="showHoveredPokemon"/>
         </div>
     </div>
