@@ -14,8 +14,11 @@ export default {
     },
     methods: {
         catchPokemons(pokemonName) {
+            if (this.myPokemons.includes(pokemonName)){
+                console.log("Pokemon already there!");
+            } else {
                 this.myPokemons.push(pokemonName)
-                console.log(this.myPokemons);
+            }
         }
     }
 

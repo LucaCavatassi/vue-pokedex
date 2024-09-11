@@ -1,6 +1,7 @@
 <script>
     import axios from "axios";
     export default {
+        emits: ["pokemonName"],
         data() {
             return {
                 searchQuery: "",
@@ -11,8 +12,11 @@
             fetchData() {
                 axios.get(`https://pokeapi.co/api/v2/pokemon/${this.searchQuery}`).then((resp)=> {
                     this.result = resp.data;
-                    this.$emit("pokemonName", this.result.name)
+                    
                 })
+            },
+            catchPokemon() {
+                this.$emit("pokemonName", this.result.name)
             }
         }
     }
@@ -21,6 +25,7 @@
 <template>
     <input type="text" v-model=searchQuery>
     <button @click="fetchData">Search</button>
+    <button @click="catchPokemon">Catch</button>
 
     <ul v-if="this.result.name">
         <img :src="this.result.sprites.front_default" alt="">
