@@ -63,9 +63,10 @@ export default {
 
 <style scoped lang="scss">
     #pokedex-container{
-        height: 70vh;
+        height: calc(90vh - 80px);
         width: 80%;
-        margin: 2.5rem auto;
+        max-width: 850px;
+        margin: 2rem auto;
         background-color: rgb(253, 89, 89);
         border: 8px solid  #ff3434;
         border-radius: 15px;

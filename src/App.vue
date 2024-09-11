@@ -22,6 +22,6 @@
   body {
     background-image: url(/bg_pokedex.webp);
     background-position: center;
-    background-size: cover;
+    background-size: contain;
   }
 </style>

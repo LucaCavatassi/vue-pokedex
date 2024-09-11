@@ -60,10 +60,11 @@
             <img class="img-fluid" :src="result.sprites.front_default" alt="">
         </div>
         <ul>
-            <li>{{ result.name }}</li>
-            <li>{{ result.types[0].type.name }}</li>
-            <li>{{ result.height }}</li>
-            <li>{{ result.weight }}</li>
+            <li>name - {{ result.name }}</li>
+            <li>type -  {{ result.types[0].type.name }}</li>
+            <li>height - {{ result.height }}</li>
+            <li>weight - {{ result.weight }}</li>
+            <hr class="m-0">
             <li v-for="stats in result.stats">{{ stats.stat.name }} - {{ stats.base_stat }}</li>
         </ul>
     </div>
@@ -88,6 +89,7 @@
         margin: 0.7rem 1rem;
         .img-cont{
             border: 10px solid gray;
+            border-radius: 15px;
             width: 220px;
             height: 170px;
             background-color: white;
@@ -100,11 +102,18 @@
         }
         ul{
             list-style: none;
-            padding: 0;
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 0.9rem;
             margin: 10px 0;
             height: 100%;
             width: 100%;
             background-color: green;
+            color: greenyellow;
+            li{
+                text-transform: capitalize;
+            }
         }
     }
 </style>
