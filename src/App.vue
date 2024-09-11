@@ -1,8 +1,16 @@
 <script>
+  import PokedexContainer from "./components/PokedexContainer.vue"
+
+  export default {
+    components: {
+      PokedexContainer
+    }
+  }
+
 </script>
 
 <template>
-  <h1>Hello World</h1>
+  <PokedexContainer/>
 </template>
 
 <style lang="scss">
@@ -11,4 +19,9 @@
   html, body {
   font-family: 'Electrolize', sans-serif;
 }
+  body {
+    background-image: url(../public/bg_pokedex.webp);
+    background-position: center;
+    background-size: cover;
+  }
 </style>
