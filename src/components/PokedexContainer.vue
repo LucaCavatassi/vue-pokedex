@@ -39,7 +39,6 @@ export default {
             if (pokemonHovered) {
                 axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonHovered}`).then((resp)=> {
                         this.hoveredPokemon = resp.data;
-                        console.log(this.hoveredPokemon);
                 })
             } else {
                 this.hoveredPokemon = null

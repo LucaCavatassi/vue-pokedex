@@ -13,13 +13,15 @@
                 searchQuery: "",
                 result: {},
                 hoveredResult: {},
+                switchButton: false
             }
         },
         mounted(){
-            console.log(this.hoveredPokemon);        
+            console.log(this.switchButton);        
         },
         methods: {
             fetchData() {
+                this.switchButton = false
                 this.hoveredResult = {};
                 axios.get(`https://pokeapi.co/api/v2/pokemon/${this.searchQuery}`).then((resp)=> {
                     this.result = resp.data;
@@ -28,6 +30,8 @@
                 })
             },
             catchPokemon() {
+                this.switchButton = true
+                console.log(this.switchButton);        
                 this.$emit("pokemonName", this.result.name)
             },
         }
@@ -36,12 +40,14 @@
 
 <template>
     <div class="search-section d-flex justify-content-between align-items-center py-2">
-    <div class="d-flex">
-        <input class="me-1 w-50 fs-5" type="text" v-model="searchQuery" placeholder="Search...">
-        <button @click="fetchData" class="fs-5"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
-
-    <button id="catch-button"  class="fs-5" @click="catchPokemon">Catch</button>
+        <div class="d-flex">
+            <input class="me-1 w-50 fs-5" type="text" v-model="searchQuery" placeholder="Search...">
+            <button @click="fetchData" class="fs-5"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div>
+            <button v-if="switchButton" class="fs-5" @click="catchPokemon">Remove</button>
+            <button v-else class="fs-5" @click="catchPokemon">Catch</button>
+        </div>
     </div>
 
     <div class="results-container d-flex flex-column justify-content-center align-items-center" v-if="hoveredPokemon && hoveredPokemon.name">
