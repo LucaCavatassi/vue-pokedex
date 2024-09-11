@@ -1,10 +1,24 @@
 <script>
-import SearchSection from "./SearchSection.vue"
+import SearchSection from "./SearchSection.vue";
+import CatchedSection from "./CatchedSection.vue"
 
 export default {
     components: {
         SearchSection,
+        CatchedSection
+    },
+    data() {
+        return {
+            myPokemons: []
+        }
+    },
+    methods: {
+        catchPokemons(pokemonName) {
+                this.myPokemons.push(pokemonName)
+                console.log(this.myPokemons);
+        }
     }
+
 }
 
 </script>
@@ -12,10 +26,10 @@ export default {
 <template>
     <div id="pokedex-container" class="d-flex">
         <div class="ms-cont ms-cont-1">
-            <SearchSection/>
+            <SearchSection @pokemonName="catchPokemons"/>
         </div>
         <div class="ms-cont ms-cont-2">
-
+            <CatchedSection :pokemonList="myPokemons"/>
         </div>
     </div>
 

@@ -11,6 +11,7 @@
             fetchData() {
                 axios.get(`https://pokeapi.co/api/v2/pokemon/${this.searchQuery}`).then((resp)=> {
                     this.result = resp.data;
+                    this.$emit("pokemonName", this.result.name)
                 })
             }
         }
