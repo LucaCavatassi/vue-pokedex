@@ -20,7 +20,7 @@
   font-family: 'Electrolize', sans-serif;
 }
   body {
-    background-image: url(../public/bg_pokedex.webp);
+    background-image: url(/bg_pokedex.webp);
     background-position: center;
     background-size: cover;
   }
