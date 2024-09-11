@@ -32,34 +32,79 @@
 </script>
 
 <template>
-    <input type="text" v-model=searchQuery>
-    <button @click="fetchData">Search</button>
-    <button @click="catchPokemon">Catch</button>
+    <div class="search-section d-flex justify-content-between align-items-center py-2">
+    <div class="d-flex">
+        <input class="me-1 w-50 fs-5" type="text" v-model="searchQuery" placeholder="Search...">
+        <button @click="fetchData" class="fs-5"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
 
-    <ul v-if="hoveredPokemon.name">
-        <img :src="hoveredPokemon.sprites.front_default" alt="">
-        <li>{{ hoveredPokemon.name }}</li>
-        <li>{{ hoveredPokemon.types[0].type.name }}</li>
-        <li>{{ hoveredPokemon.height }}</li>
-        <li>{{ hoveredPokemon.weight }}</li>
+    <button id="catch-button"  class="fs-5" @click="catchPokemon">Catch</button>
+    </div>
 
-        <ul v-for="stats in hoveredPokemon.stats" :key="stats.stat.name">
-            <li>{{ stats.stat.name }} - {{ stats.base_stat }}</li>
+    <div class="results-container d-flex flex-column justify-content-center align-items-center" v-if="hoveredPokemon.name">
+        <div class="img-cont">
+            <img class="img-fluid" :src="hoveredPokemon.sprites.front_default" alt="">
+        </div>
+        <ul>
+            <img :src="hoveredPokemon.sprites.front_default" alt="">
+            <li>{{ hoveredPokemon.name }}</li>
+            <li>{{ hoveredPokemon.types[0].type.name }}</li>
+            <li>{{ hoveredPokemon.height }}</li>
+            <li>{{ hoveredPokemon.weight }}</li>
+            <li v-for="stats in hoveredPokemon.stats">{{ stats.stat.name }} - {{ stats.base_stat }}</li>
         </ul>
-    </ul>
+    </div>
 
-    <ul v-else-if="result.name">
-        <img :src="result.sprites.front_default" alt="">
-        <li>{{ result.name }}</li>
-        <li>{{ result.types[0].type.name }}</li>
-        <li>{{ result.height }}</li>
-        <li>{{ result.weight }}</li>
-
-        <ul v-for="stats in result.stats" :key="stats.stat.name">
-            <li>{{ stats.stat.name }} - {{ stats.base_stat }}</li>
+    <div class="results-container d-flex flex-column justify-content-center align-items-center" v-else-if="result.name">
+        <div class="img-cont">
+            <img class="img-fluid" :src="result.sprites.front_default" alt="">
+        </div>
+        <ul>
+            <li>{{ result.name }}</li>
+            <li>{{ result.types[0].type.name }}</li>
+            <li>{{ result.height }}</li>
+            <li>{{ result.weight }}</li>
+            <li v-for="stats in result.stats">{{ stats.stat.name }} - {{ stats.base_stat }}</li>
         </ul>
-    </ul>
+    </div>
+
+    <div class="results-container d-flex flex-column justify-content-center align-items-center" v-else-if="!result.name">
+        <div class="img-cont">
+            <img class="img-fluid" src="/public/pokeball.png" alt="">
+        </div>
+        <ul>
+            <li>No valid pokemon selected!</li>
+        </ul>
+    </div>
 </template>
 
-<style>
+<style scoped lang="scss">
+    .search-section {
+        height: 50px;
+        padding: 10px;
+    }
+    .results-container {
+        height: calc(100% - 50px - 1rem);
+        margin: 0.7rem 1rem;
+        .img-cont{
+            border: 10px solid gray;
+            width: 220px;
+            height: 170px;
+            background-color: white;
+            img {
+                border: 5px solid black;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+            height: 100%;
+            width: 100%;
+            background-color: green;
+        }
+    }
 </style>
