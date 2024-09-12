@@ -6,6 +6,10 @@
             hoveredPokemon: {
                 type: [Object, null],
                 required: true
+            },
+            isCatched: {
+                type: Boolean,
+                required: true
             }
         },
         data() {
@@ -13,7 +17,6 @@
                 searchQuery: "",
                 result: {},
                 hoveredResult: {},
-                switchButton: false
             }
         },
         mounted(){
@@ -22,18 +25,17 @@
         
         methods: {
             fetchData() {
-                this.switchButton = false
                 this.hoveredResult = {};
                 axios.get(`https://pokeapi.co/api/v2/pokemon/${this.searchQuery}`).then((resp)=> {
                     this.result = resp.data;
-                    console.log(this.hoveredResult);
-                    
                 })
             },
-            catchPokemon() {
-                this.switchButton = true
-                console.log(this.switchButton);        
-                this.$emit("pokemonName", this.result.name)
+            handlePokemon() {     
+                if (!this.isCatched) {
+                    this.$emit("pokemonName", this.result.name)
+                } else if (this.isCatched) {
+                    this.$emit("pokemonToDelete", this.result.name)
+                }
             },
         }
     }
@@ -46,8 +48,8 @@
             <button @click="fetchData" class="fs-5"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         <div>
-            <button v-if="switchButton" class="fs-5" @click="catchPokemon">Remove</button>
-            <button v-else class="fs-5" @click="catchPokemon">Catch</button>
+            <button v-if="isCatched" class="fs-5" @click="handlePokemon">Remove</button>
+            <button v-else class="fs-5" @click="handlePokemon">Catch</button>
         </div>
     </div>
 
@@ -81,7 +83,7 @@
 
     <div class="results-container d-flex flex-column justify-content-center align-items-center" v-else>
         <div class="img-cont">
-            <img class="img-fluid" src="/public/pokeball.png" alt="">
+            <img class="img-fluid" src="/pokeball.png" alt="">
         </div>
         <ul>
             <li>No valid pokemon selected!</li>

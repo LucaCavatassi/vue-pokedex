@@ -12,7 +12,8 @@ export default {
         return {
             myPokemons: [],
             isCatched: false,
-            hoveredPokemon: {}
+            hoveredPokemon: {},
+            showAlert: false,
         }
     },
     mounted() {
@@ -26,9 +27,10 @@ export default {
         catchPokemons(pokemonName) {
             if (this.myPokemons.includes(pokemonName)){
                 this.isCatched = true
+                this.showAlert = true
 
                 setTimeout(()=> {
-                    this.isCatched = false;
+                    this.showAlert = false
                 }, 4000)
             } else {
                 this.myPokemons.push(pokemonName)
@@ -43,8 +45,19 @@ export default {
             } else {
                 this.hoveredPokemon = null
             }
+        },
+
+        deletePokemons(pokemonToDelete) {
+            let index = this.myPokemons.findIndex(pokemon => pokemon === pokemonToDelete);
+
+            if (index !== -1) {
+                this.myPokemons.splice(index, 1);
+
+                localStorage.setItem('myPokemons', JSON.stringify(this.myPokemons));
+            }
+
+            this.isCatched = false;
         }
-        
     }
 
 }
@@ -53,7 +66,7 @@ export default {
 
 <template>
     <!-- Alert pokemon already catched -->
-    <div v-if="this.isCatched" class="alert alert-warning d-flex justify-content-center align-items-center mb-0 p-0">
+    <div v-if="this.showAlert" class="alert alert-warning d-flex justify-content-center align-items-center mb-0 p-0">
         <div>
             <p class="fs-2 mb-0">You already got this pokemon!</p>
             <p class="fs-6 mb-0 text-center">Try catching another one.</p>
@@ -63,7 +76,7 @@ export default {
     <!-- sections -->
     <div id="pokedex-container" class="d-flex">
         <div class="ms-cont ms-cont-1">
-            <SearchSection @pokemonName="catchPokemons" :hoveredPokemon="hoveredPokemon"/>
+            <SearchSection @pokemonName="catchPokemons" @pokemonToDelete="deletePokemons" :hoveredPokemon="hoveredPokemon" :isCatched="isCatched"/>
         </div>
         <div class="ms-cont ms-cont-2 d-flex align-items-center justify-content-center">
             <CatchedSection :pokemonList="myPokemons" @pokemonHovered="showHoveredPokemon"/>

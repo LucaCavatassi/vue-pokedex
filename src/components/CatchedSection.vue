@@ -42,6 +42,7 @@ export default {
                 text-transform: capitalize;
                 p:hover{
                     color: rgb(97, 96, 96);
+                    cursor: pointer;
                 }
             }
         }
