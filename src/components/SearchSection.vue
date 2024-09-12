@@ -47,8 +47,7 @@
                 }
             },
 
-        },
-
+        },   
         computed: {
             topImageClass() {
             return this.showTopImage ? 'd-block' : 'd-none';
@@ -57,7 +56,6 @@
             return this.showTopImage ? 'd-none' : 'd-block';
             },
         },
-        
         mounted() {
             setInterval(() => {
             this.showTopImage = !this.showTopImage;
@@ -89,7 +87,12 @@
             <li>height - {{ hoveredPokemon.height }}</li>
             <li>weight - {{ hoveredPokemon.weight }}</li>
             <hr>
-            <li v-for="stats in hoveredPokemon.stats">{{ stats.stat.name }} - {{ stats.base_stat }}</li>
+            <li v-for="stat in hoveredPokemon.stats" :key="stat.stat.name" class="stat-item">
+                {{ stat.stat.name }}: 
+                <div class="progress-bar">
+                    <span :style="{ width: (stat.base_stat / 255) * 100 + '%' }"></span>
+                </div>
+            </li>
         </ul>
     </div>
 
@@ -104,7 +107,12 @@
             <li>height - {{ result.height }}</li>
             <li>weight - {{ result.weight }}</li>
             <hr>
-            <li v-for="stats in result.stats">{{ stats.stat.name }} - {{ stats.base_stat }}</li>
+            <li v-for="stat in result.stats" :key="stat.stat.name" class="stat-item">
+                {{ stat.stat.name }}: 
+                <div class="progress-bar">
+                    <span :style="{ width: (stat.base_stat / 150) * 100 + '%' }"></span>
+                </div>
+            </li>
         </ul>
     </div>
 
@@ -153,6 +161,28 @@
             color: greenyellow;
             li{
                 text-transform: capitalize;
+            }
+        }
+    }
+    .stat-item {
+        display: flex;
+        align-items: center;
+        margin: 5px 0;
+
+        .progress-bar {
+            margin-left: 10px;
+            background-color: rgb(18, 187, 18);
+            border-radius: 5px;
+            overflow: hidden;
+            flex-grow: 1;
+            height: 10px;
+
+            span {
+                display: block;
+                height: 100%;
+                background-color: greenyellow; // Gray background for the progress bar
+                border-radius: 5px;
+                line-height: 20px; // Adjust based on height
             }
         }
     }
