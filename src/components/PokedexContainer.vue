@@ -11,7 +11,6 @@ export default {
     data() {
         return {
             myPokemons: [],
-            isCatched: false,
             hoveredPokemon: {},
             showAlert: false,
         }
@@ -26,7 +25,6 @@ export default {
     methods: {
         catchPokemons(pokemonName) {
             if (this.myPokemons.includes(pokemonName)){
-                this.isCatched = true
                 this.showAlert = true
 
                 setTimeout(()=> {
@@ -56,7 +54,6 @@ export default {
                 localStorage.setItem('myPokemons', JSON.stringify(this.myPokemons));
             }
 
-            this.isCatched = false;
         }
     }
 
@@ -76,7 +73,7 @@ export default {
     <!-- sections -->
     <div id="pokedex-container" class="d-flex">
         <div class="ms-cont ms-cont-1">
-            <SearchSection @pokemonName="catchPokemons" @pokemonToDelete="deletePokemons" :hoveredPokemon="hoveredPokemon" :isCatched="isCatched" :myPokemons="myPokemons"/>
+            <SearchSection @pokemonName="catchPokemons" @pokemonToDelete="deletePokemons" :hoveredPokemon="hoveredPokemon" :myPokemons="myPokemons"/>
         </div>
         <div class="ms-cont ms-cont-2 d-flex align-items-center justify-content-center">
             <CatchedSection :pokemonList="myPokemons" @pokemonHovered="showHoveredPokemon"/>

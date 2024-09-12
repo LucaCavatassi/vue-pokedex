@@ -1,14 +1,10 @@
 <script>
     import axios from "axios";
     export default {
-        emits: ["pokemonName", "pokemonToDelete"],
+        emits: ["pokemonName", "pokemonToDelete", "isCatched"],
         props: {
             hoveredPokemon: {
                 type: [Object, null],
-                required: true
-            },
-            isCatched: {
-                type: Boolean,
                 required: true
             },
             myPokemons: {
@@ -28,13 +24,8 @@
                 this.hoveredResult = {};
                 axios.get(`https://pokeapi.co/api/v2/pokemon/${this.searchQuery}`).then((resp)=> {
                     this.result = resp.data;
-                    console.log(this.result);
-                    console.log(this.myPokemons);
-                    
-                    
                     if(this.myPokemons.includes(this.result.name)) {
                         this.inArray = true;
-                        console.log(this.inArray);   
                     }else {
                         this.inArray = false;
                     }
@@ -43,6 +34,7 @@
             handlePokemon() {     
                 if (!this.inArray) {
                     this.$emit("pokemonName", this.result.name)
+                    this.inArray = true;
                 } else if (this.inArray) {
                     this.$emit("pokemonToDelete", this.result.name)
                     this.inArray = false;   
