@@ -8,7 +8,8 @@
                 required: true
             },
             myPokemons: {
-                type: [Array, null]
+                type: [Array, null],
+                required: true
             }
         },
         data() {
