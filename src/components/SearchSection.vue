@@ -1,7 +1,7 @@
 <script>
     import axios from "axios";
     export default {
-        emits: ["pokemonName"],
+        emits: ["pokemonName", "pokemonToDelete"],
         props: {
             hoveredPokemon: {
                 type: [Object, null],
@@ -10,6 +10,9 @@
             isCatched: {
                 type: Boolean,
                 required: true
+            },
+            myPokemons: {
+                type: [Array, null]
             }
         },
         data() {
@@ -17,24 +20,32 @@
                 searchQuery: "",
                 result: {},
                 hoveredResult: {},
+                inArray: false,
             }
         },
-        mounted(){
-            console.log(this.switchButton);        
-        },
-        
         methods: {
             fetchData() {
                 this.hoveredResult = {};
                 axios.get(`https://pokeapi.co/api/v2/pokemon/${this.searchQuery}`).then((resp)=> {
                     this.result = resp.data;
+                    console.log(this.result);
+                    console.log(this.myPokemons);
+                    
+                    
+                    if(this.myPokemons.includes(this.result.name)) {
+                        this.inArray = true;
+                        console.log(this.inArray);   
+                    }else {
+                        this.inArray = false;
+                    }
                 })
             },
             handlePokemon() {     
-                if (!this.isCatched) {
+                if (!this.inArray) {
                     this.$emit("pokemonName", this.result.name)
-                } else if (this.isCatched) {
+                } else if (this.inArray) {
                     this.$emit("pokemonToDelete", this.result.name)
+                    this.inArray = false;   
                 }
             },
         }
@@ -48,7 +59,7 @@
             <button @click="fetchData" class="fs-5"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
         <div>
-            <button v-if="isCatched" class="fs-5" @click="handlePokemon">Remove</button>
+            <button v-if="inArray" class="fs-5" @click="handlePokemon">Remove</button>
             <button v-else class="fs-5" @click="handlePokemon">Catch</button>
         </div>
     </div>

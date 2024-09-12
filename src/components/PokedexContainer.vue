@@ -76,7 +76,7 @@ export default {
     <!-- sections -->
     <div id="pokedex-container" class="d-flex">
         <div class="ms-cont ms-cont-1">
-            <SearchSection @pokemonName="catchPokemons" @pokemonToDelete="deletePokemons" :hoveredPokemon="hoveredPokemon" :isCatched="isCatched"/>
+            <SearchSection @pokemonName="catchPokemons" @pokemonToDelete="deletePokemons" :hoveredPokemon="hoveredPokemon" :isCatched="isCatched" :myPokemons="myPokemons"/>
         </div>
         <div class="ms-cont ms-cont-2 d-flex align-items-center justify-content-center">
             <CatchedSection :pokemonList="myPokemons" @pokemonHovered="showHoveredPokemon"/>
