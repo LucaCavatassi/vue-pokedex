@@ -2,6 +2,7 @@
     import axios from "axios";
     export default {
         emits: ["pokemonName", "pokemonToDelete", "isCatched"],
+
         props: {
             hoveredPokemon: {
                 type: [Object, null],
@@ -12,14 +13,17 @@
                 required: true
             }
         },
+
         data() {
             return {
                 searchQuery: "",
                 result: {},
                 hoveredResult: {},
                 inArray: false,
+                showTopImage: true,
             }
         },
+
         methods: {
             fetchData() {
                 this.hoveredResult = {};
@@ -30,8 +34,9 @@
                     }else {
                         this.inArray = false;
                     }
-                })
+                })                
             },
+
             handlePokemon() {     
                 if (!this.inArray) {
                     this.$emit("pokemonName", this.result.name)
@@ -41,7 +46,23 @@
                     this.inArray = false;   
                 }
             },
-        }
+
+        },
+
+        computed: {
+            topImageClass() {
+            return this.showTopImage ? 'd-block' : 'd-none';
+            },
+            bottomImageClass() {
+            return this.showTopImage ? 'd-none' : 'd-block';
+            },
+        },
+        
+        mounted() {
+            setInterval(() => {
+            this.showTopImage = !this.showTopImage;
+            }, 1000); // 2 seconds interval
+        },
     }
 </script>
 
@@ -58,9 +79,10 @@
     </div>
 
     <div class="results-container d-flex flex-column justify-content-center align-items-center" v-if="hoveredPokemon && hoveredPokemon.name">
-        <div class="img-cont">
-            <img class="img-fluid" :src="hoveredPokemon.sprites.front_default" alt="">
-        </div>
+        <section class="img-cont">
+            <img class="img-fluid" :class="topImageClass" :src="hoveredPokemon.sprites.front_default" :alt="hoveredPokemon.name">
+            <img class="img-fluid" :class="bottomImageClass" :src="hoveredPokemon.sprites.back_default" :alt="hoveredPokemon.name">
+        </section>
         <ul>
             <li>name - {{ hoveredPokemon.name }}</li>
             <li>type -  {{ hoveredPokemon.types[0].type.name }}</li>
@@ -72,9 +94,10 @@
     </div>
 
     <div class="results-container d-flex flex-column justify-content-center align-items-center" v-else-if="result.name">
-        <div class="img-cont">
-            <img class="img-fluid" :src="result.sprites.front_default" alt="">
-        </div>
+        <section class="img-cont">
+            <img class="img-fluid" :class="topImageClass" :src="result.sprites.front_default" :alt="result.name">
+            <img class="img-fluid" :class="bottomImageClass" :src="result.sprites.back_default" :alt="result.name">
+        </section>
         <ul>
             <li>name - {{ result.name }}</li>
             <li>type -  {{ result.types[0].type.name }}</li>
@@ -109,6 +132,7 @@
             width: 220px;
             height: 170px;
             background-color: white;
+            
             img {
                 border: 5px solid black;
                 width: 100%;

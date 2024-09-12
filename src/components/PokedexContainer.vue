@@ -16,7 +16,6 @@ export default {
         }
     },
     mounted() {
-        // Retrieve caught Pokemon from localStorage when component is mounted
         const savedPokemons = localStorage.getItem('myPokemons');
         if (savedPokemons) {
             this.myPokemons = JSON.parse(savedPokemons);
